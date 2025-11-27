@@ -2,7 +2,13 @@
 
 This Burp extension lets you quickly update the headers of a request inside a Repeater or Intruder tab to newer headers from the same host using the context menu. 
 
-The main scenario for this is replacing the cookies inside an old Repeater tab with the latest cookies. The replacement headers will be selected based on the newest request with the same "Host" header value as the selected request. Headers that should be available in the context menu for replacement can be specified in the Burp settings under "Settings/Extensions/Quick Update Headers".
+The main scenario for this is replacing the cookies inside an old Repeater tab with the latest cookies. The replacement headers will be selected based on the newest request with the same "Host" header value as the selected request.
+
+![](/images/demo.png)
+
+Headers that should be available in the context menu for replacement can be specified in the Burp settings under "Settings/Extensions/Quick Update Headers".
+
+![](/images/settings.png)
 
 ## Build
 
@@ -14,6 +20,8 @@ mv ./build/libs/*.jar .
 ```
 
 ## Bambda
+
+This is just a quick and dirty way of doing it. The extension is nicer ;)
 
 ```java
 String[] headersToReplace = {"Authorization","Cookie"};
