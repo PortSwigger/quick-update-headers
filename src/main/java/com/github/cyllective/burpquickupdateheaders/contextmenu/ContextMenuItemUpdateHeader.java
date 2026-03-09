@@ -76,6 +76,9 @@ public class ContextMenuItemUpdateHeader implements ContextMenuItemsProvider {
             ProxyHttpRequestResponse historyEntry = historyIterator.previous();
 
             HttpHeader hostHeader = historyEntry.request().header("Host");
+            if (hostHeader == null) {
+                continue;
+            }
 
             if (hostHeader.value().equals(hostValue)) {
                 // We are on the same host
