@@ -36,8 +36,8 @@ public class ContextMenuItemUpdateHeader implements ContextMenuItemsProvider {
             return emptyList();
         }
 
-        String hostValue = selectedRequestResponse.requestResponse().request().headerValue("Host");
-        if (hostValue == null) {
+        String targetHost = selectedRequestResponse.requestResponse().request().headerValue("Host");
+        if (targetHost == null) {
             return emptyList();
         }
 
@@ -47,7 +47,7 @@ public class ContextMenuItemUpdateHeader implements ContextMenuItemsProvider {
                 JMenuItem menuItem = new JMenuItem(header.name());
                 menuItem.addActionListener(e -> {
                     Thread thread = new Thread(
-                            () -> updateHeaderFromHistory(header.name(), hostValue, selectedRequestResponse),
+                            () -> updateHeaderFromHistory(header.name(), targetHost, selectedRequestResponse),
                             "QuickUpdateHeaders-worker"
                     );
                     thread.setDaemon(true);
@@ -66,11 +66,11 @@ public class ContextMenuItemUpdateHeader implements ContextMenuItemsProvider {
                 event.messageEditorRequestResponse().isPresent();
     }
 
-    private void updateHeaderFromHistory(String headerName, String hostValue,
+    private void updateHeaderFromHistory(String targetHeader, String targetHost,
                                          MessageEditorHttpRequestResponse selectedResponse) {
 
-        // It is faster (in big projects) to go through the whole history
-        // rather than to filter the history first by host header
+        // It is faster (in big projects) to go through the whole history (in reverse)
+        // rather than to filter the history first by the host header
         List<ProxyHttpRequestResponse> history = api.proxy().history();
         if (history.isEmpty()) {
             return;
@@ -88,9 +88,9 @@ public class ContextMenuItemUpdateHeader implements ContextMenuItemsProvider {
                 continue;
             }
 
-            if (hostHeader.value().equals(hostValue)) {
+            if (hostHeader.value().equals(targetHost)) {
                 // We are on the same host
-                HttpHeader headerToInsert = historyEntry.request().header(headerName);
+                HttpHeader headerToInsert = historyEntry.request().header(targetHeader);
                 if (headerToInsert != null) {
                     // Update the request with the newest header
                     selectedResponse.setRequest(
