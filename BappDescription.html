@@ -1,0 +1,29 @@
+<p>This Burp extension is designed to facilitate the rapid updating of request headers within a Repeater or Intruder tab. The extension locates the most recent headers from the same host and applies them via the context menu. One common use case involves updating antiquated cookies in a Repeater tab with the most recent cookies.</p>
+
+<p>Error messages can be systematically avoided by selecting replacement headers from the latest request that shares the Host header value of the original request. To customize the headers available for replacement in the context menu, adjust the options in the Burp settings under Settings/Extensions/Quick Update Headers.</p>
+
+<h2>Features</h2>
+<ul>
+    <li>Updates requests with the latest headers from the same host.</li>
+    <li>Contextual menu for easy header selection.</li>
+    <li>Highlights cookie replacement scenarios.</li>
+</ul>
+    
+<h2>Usage</h2>
+<p>Upon right-clicking a request inside a Repeater or Intruder tab, you are presented with the Update Headers option. By selecting this, the extension will automatically update your request with the most recent headers based on the HOST value of your request.</p>
+
+<p>Multiple headers can be specified for replacement. Simply go to the Settings/Extensions/Quick Update Headers section in Burp settings and input the header names that you want to be available for replacement. For example, to replace Authorization and Cookie together, just input these two names.</p>
+
+<pre class=pre-wrap><code class=Code>
+String[] headersToReplace = {Authorization,Cookie};
+...
+for (String headerToReplace: headersToReplace) {
+    HttpHeader headerToInsert = historyEntry.request().header(headerToReplace);
+    if (headerToInsert != null) {
+        // Update the request with the newest header
+        newRequest = newRequest.withHeader(headerToInsert);
+    }
+}
+</code></pre>
+
+<p>This will replace the Authorization and Cookie headers with the most recent ones from the same host, enhancing the efficiency and precision of your Repeater or Intruder tasks.</p>
