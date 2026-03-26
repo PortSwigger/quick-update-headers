@@ -3,7 +3,7 @@ ExtensionType: 1
 Name: Quick Update Headers
 RepoName: quick-update-headers
 ScreenVersion: 1.0.0
-SerialVersion: 1
+SerialVersion: 2
 MinPlatformVersion: 29
 ProOnly: False
 Author: cyllective
