@@ -7,7 +7,7 @@ SerialVersion: 1
 MinPlatformVersion: 29
 ProOnly: False
 Author: cyllective
-ShortDescription: This extension enables rapid update of request headers in a Repeater or Intruder tab to the latest headers from the same host, specifically useful for cookie replacements.
+ShortDescription: Refresh individual request headers with the latest values from the same host.
 EntryPoint: burp-quick-update-headers-1.0.jar
 BuildCommand: ./gradlew build
 SupportedProducts: Pro, Community
